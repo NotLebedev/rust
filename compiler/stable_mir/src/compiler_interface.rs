@@ -12,10 +12,10 @@ use crate::mir::mono::{Instance, InstanceDef, StaticDef};
 use crate::mir::{BinOp, Body, Place, UnOp};
 use crate::target::MachineInfo;
 use crate::ty::{
-    AdtDef, AdtKind, Allocation, ClosureDef, ClosureKind, Discr, FieldDef, FnDef, ForeignDef,
-    ForeignItemKind, ForeignModule, ForeignModuleDef, GenericArgs, GenericPredicates, Generics,
-    ImplDef, ImplTrait, IntrinsicDef, LineInfo, MirConst, PolyFnSig, RigidTy, Span, TraitDecl,
-    TraitDef, Ty, TyConst, TyConstId, TyKind, UintTy, VariantDef, VariantIdx,
+    AdtDef, AdtKind, Allocation, ClosureDef, ClosureKind, CoroutineDef, Discr, FieldDef, FnDef,
+    ForeignDef, ForeignItemKind, ForeignModule, ForeignModuleDef, GenericArgs, GenericPredicates,
+    Generics, ImplDef, ImplTrait, IntrinsicDef, LineInfo, MirConst, PolyFnSig, RigidTy, Span,
+    TraitDecl, TraitDef, Ty, TyConst, TyConstId, TyKind, UintTy, VariantDef, VariantIdx,
 };
 use crate::{
     Crate, CrateItem, CrateItems, CrateNum, DefId, Error, Filename, ImplTraitDecls, ItemKind,
@@ -120,6 +120,12 @@ pub trait Context {
     fn adt_variants_len(&self, def: AdtDef) -> usize;
 
     fn adt_discr_for_variant(&self, adt: AdtDef, variant: VariantIdx) -> Discr;
+    fn coroutine_discr_for_variant(
+        &self,
+        coroutine: CoroutineDef,
+        args: &GenericArgs,
+        variant: VariantIdx,
+    ) -> Discr;
 
     /// The name of a variant.
     fn variant_name(&self, def: VariantDef) -> Symbol;
